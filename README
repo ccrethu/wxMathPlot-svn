@@ -62,7 +62,8 @@ It requires wxWidgets >= 2.6 to be installed.
 
 Under POSIX systems, to build and install wxMathPlot run:
 
-cmake -i .
+mkdir build && cd build
+cmake ../ -DCMAKE_INSTALL_PREFIX=/usr/local/
 make
 make install
 

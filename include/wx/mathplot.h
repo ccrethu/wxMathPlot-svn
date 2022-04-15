@@ -2,16 +2,16 @@
 // Name:            mathplot.cpp
 // Purpose:         Framework for plotting in wxWindows
 // Original Author: David Schalig
-// Maintainer:      Davide Rondini
+// Maintainer:      Davide Rondini, Lars Easior
 // Contributors:    Jose Luis Blanco, Val Greene
 // Created:         21/07/2003
-// Last edit:       22/02/2009
+// Last edit:       15/04/2022
 // Copyright:       (c) David Schalig, Davide Rondini
 // Licence:         wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
 
-#ifndef _MP_MATHPLOT_H_
-#define _MP_MATHPLOT_H_
+#ifndef WX_MATHPLOT_H
+#define WX_MATHPLOT_H
 
 /** @file mathplot.h */
 /** @mainpage wxMathPlot
@@ -1713,4 +1713,4 @@ protected:
 
 /*@}*/
 
-#endif // _MP_MATHPLOT_H_
+#endif // WX_MATHPLOT_H

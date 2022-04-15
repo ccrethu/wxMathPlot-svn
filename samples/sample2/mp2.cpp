@@ -9,7 +9,7 @@
 #include <wx/wx.h>
 #endif
 
-#include <mathplot.h>
+#include <wx/mathplot.h>
 
 #include <wx/image.h>
 #include <wx/listctrl.h>
