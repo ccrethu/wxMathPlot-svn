@@ -9,36 +9,19 @@ function create_source_tgz {
     echo "Building packet $PKGNAME Versione $VERSION"
     PKGBASE=$PKGNAME-$VERSION
     PKGDIR=$PKGNAME-$VERSION
-    CMAKEDIR=""
-    if [[ -d /usr/share/cmake ]] ; then
-        CMAKEDIR=/usr/share/cmake ;
-    fi
-    if [[ -d /usr/share/cmake-2.4 ]] ; then
-        CMAKEDIR=/usr/share/cmake-2.4 ;
-    fi
-    if [[ -d /usr/share/cmake-2.6 ]] ; then
-        CMAKEDIR=/usr/share/cmake-2.6 ;
-    fi
-    if [[ -d /usr/share/cmake-2.8 ]] ; then
-        CMAKEDIR=/usr/share/cmake-2.8 ;
-    fi
-    if [[ -z $CMAKEDIR ]] ; then
-        echo "CMake modules path not found. Aborting."
-        exit 0 ;
-    fi
 	
     if [[ -e ./distrib/$PKGBASE.tar.gz ]] ; then
         echo "$PKGBASE already exists: to avoid confusion, please change version"
         exit 1 ;
     else
         mkdir ./distrib/$PKGDIR ;
-        mkdir ./distrib/$PKGDIR/{www,distrib,build,samples,samples/sample{1,2,3}}
+        mkdir -p ./distrib/$PKGDIR/{debian,distrib,include/wx,lib,samples,samples/sample{1,2,3},src,www}
         # Copy all sources
         for SRC in `find . -name '*.h' -o -name '*.cpp' -o -name 'CMakeLists.txt' -o -name '*.in' | grep -v 'distrib'` ; do
             cp $SRC ./distrib/$PKGDIR/`dirname $SRC`/
         done
         # Copy other useful files
-        for SRC2 in {clear_project,README,Doxyfile,Dox_footer.html,Changelog,packages.sh,samples/sample3/gridmap.png} ; do
+        for SRC2 in {clear_project,README,Doxyfile,Dox_footer.html,Changelog,packages.sh,samples/sample3/gridmap.png,lib/README,distrib/Base.spec,distrib/VERSION,debian/README.Debian,debian/compat,debian/copyright,debian/docs,debian/wxmathplot-dev.dirs,debian/wxmathplot1.dirs,debian/changelog,debian/control,debian/dirs,debian/rules,debian/wxmathplot-dev.install,debian/wxmathplot1.install} ; do
             cp $SRC2 ./distrib/$PKGDIR/`dirname $SRC2`/
         done
         # Finally create tar.gz of source package
@@ -65,6 +48,24 @@ function create_rpm {
 
 function create_deb {
     VERSION=`cat ./distrib/VERSION`
+    CMAKEDIR=""
+    if [[ -d /usr/share/cmake ]] ; then
+        CMAKEDIR=/usr/share/cmake ;
+    fi
+    if [[ -d /usr/share/cmake-2.4 ]] ; then
+        CMAKEDIR=/usr/share/cmake-2.4 ;
+    fi
+    if [[ -d /usr/share/cmake-2.6 ]] ; then
+        CMAKEDIR=/usr/share/cmake-2.6 ;
+    fi
+    if [[ -d /usr/share/cmake-2.8 ]] ; then
+        CMAKEDIR=/usr/share/cmake-2.8 ;
+    fi
+    if [[ -z $CMAKEDIR ]] ; then
+        echo "CMake modules path not found. Aborting."
+        exit 0 ;
+    fi
+
     TMPCL=distrib/deb_tmp_cl
     unlink debian/control
     DEBVERSION=`cat /etc/debian_version`

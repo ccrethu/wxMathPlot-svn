@@ -8,11 +8,16 @@
 
 # Set CMake flags to enable compatibility both with 2.4 and 2.6
 cmake_minimum_required(VERSION 2.6)
-# if(COMMAND cmake_policy)
-#       cmake_policy(SET CMP0003 OLD)
-# endif(COMMAND cmake_policy)
+if(COMMAND cmake_policy)
+    cmake_policy(SET CMP0003 OLD)
+	cmake_policy(SET CMP0042 OLD)
+endif(COMMAND cmake_policy)
 
-project(wxMathPlot)
+project(wxMathPlot
+LANGUAGES CXX
+HOMEPAGE_URL https://github.invalid/easior/wxMathPlot
+DESCRIPTION "wxMathPlot is a framework for mathematical graph plotting in wxWindows.")
+#VERSION 0.2.0)
 
 INCLUDE_DIRECTORIES(include)
 
@@ -25,7 +30,7 @@ else(UNIX)
 	SET(MATHPLOT_UNICODE OFF CACHE BOOL "Build using Unicode wxWidgets build?")
 endif(UNIX)
 # Option for any platform
-SET(MATHPLOT_SHARED OFF CACHE BOOL "Create wxMathPlot as a shared library?")
+SET(MATHPLOT_SHARED ON CACHE BOOL "Create wxMathPlot as a shared library?")
 SET(MATHPLOT_DO_LOGGING OFF CACHE BOOL "Build with verbose debugging messages?")
 
 # Important note on Unicode:
@@ -39,9 +44,9 @@ endif(MATHPLOT_UNICODE)
 
 if(LINUX_64_32_CROSSCOMPILE)
     message(STATUS "Cross compiling from Linux x86_64 to Linux x86")
-     set(CMAKE_LIBRARY_PATH "/usr/lib")
-     set(CMAKE_SYSTEM_LIBRARY_PATH "/usr/lib")
-     set(CMAKE_SYSTEM_PREFIX_PATH "/usr")
+    set(CMAKE_LIBRARY_PATH "/usr/lib")
+    set(CMAKE_SYSTEM_LIBRARY_PATH "/usr/lib")
+    set(CMAKE_SYSTEM_PREFIX_PATH "/usr")
 else(LINUX_64_32_CROSSCOMPILE)
     message(STATUS "Native build")
 endif(LINUX_64_32_CROSSCOMPILE)
@@ -83,9 +88,13 @@ if(wxWidgets_FOUND)
 		endif(MATHPLOT_UNICODE)
 	endif(UNIX)
     target_link_libraries(mathplot ${wxWidgets_LIBRARIES})
+	
+	# generate pc file for pkg-config
+    set(MATHPLOT mathplot)
+    configure_file(${PROJECT_NAME}.pc.in lib/pkgconfig/${PROJECT_NAME}.pc @ONLY)
 
     # Compile samples?
-    SET( WXMATHPLOT_BUILD_EXAMPLES ON CACHE BOOL "Build examples?")
+    SET(WXMATHPLOT_BUILD_EXAMPLES OFF CACHE BOOL "Build examples?")
     IF(WXMATHPLOT_BUILD_EXAMPLES)
         add_subdirectory(samples)
     ENDIF(WXMATHPLOT_BUILD_EXAMPLES)
@@ -103,11 +112,12 @@ if(wxWidgets_FOUND)
            ARCHIVE DESTINATION ${LIBRARY_APPEND_PATH}
         )
         set(WXMATHPLOT_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/wxMathPlot/)
-        install(FILES Doxyfile DESTINATION ${WXMATHPLOT_INSTALL_DIR}/)
-		install(FILES include/wx/mathplot.h DESTINATION ${CMAKE_INSTALL_PREFIX}/include/)
+		install(FILES include/wx/mathplot.h DESTINATION ${CMAKE_INSTALL_PREFIX}/include/wx)
+		INSTALL(FILES "${CMAKE_BINARY_DIR}/lib/pkgconfig/${PROJECT_NAME}.pc"
+        DESTINATION lib/pkgconfig)
 		install(FILES samples/sample1/mp1.cpp samples/sample1/CMakeLists.txt DESTINATION ${WXMATHPLOT_INSTALL_DIR}/samples/sample1)
 		install(FILES samples/sample2/mp2.cpp samples/sample2/CMakeLists.txt DESTINATION ${WXMATHPLOT_INSTALL_DIR}/samples/sample2)
-		install(FILES samples/sample3/sample3.cpp samples/sample3/CMakeLists.txt samples/sample3/gridmap.png DESTINATION ${WXMATHPLOT_INSTALL_DIR}/samples/sample3)
+		install(FILES samples/sample3/mp3.cpp samples/sample3/CMakeLists.txt samples/sample3/gridmap.png DESTINATION ${WXMATHPLOT_INSTALL_DIR}/samples/sample3)
 #     else(UNIX)
 #     endif(UNIX)
 
