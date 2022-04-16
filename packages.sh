@@ -21,7 +21,7 @@ function create_source_tgz {
             cp $SRC ./distrib/$PKGDIR/`dirname $SRC`/
         done
         # Copy other useful files
-        for SRC2 in {clear_project,README,Doxyfile,Dox_footer.html,Changelog,packages.sh,samples/sample3/gridmap.png,lib/README,distrib/Base.spec,distrib/VERSION,debian/README.Debian,debian/compat,debian/copyright,debian/docs,debian/wxmathplot-dev.dirs,debian/wxmathplot1.dirs,debian/changelog,debian/control,debian/dirs,debian/rules,debian/wxmathplot-dev.install,debian/wxmathplot1.install} ; do
+        for SRC2 in {clear_project,README,Doxyfile,Dox_footer.html,Changelog,packages.sh,wxMathPlot.pc.in,samples/sample3/gridmap.png,lib/README,distrib/Base.spec,distrib/VERSION,debian/README.Debian,debian/compat,debian/copyright,debian/docs,debian/wxmathplot-dev.dirs,debian/wxmathplot1.dirs,debian/changelog,debian/control,debian/dirs,debian/rules,debian/wxmathplot-dev.install,debian/wxmathplot1.install} ; do
             cp $SRC2 ./distrib/$PKGDIR/`dirname $SRC2`/
         done
         # Finally create tar.gz of source package
