@@ -64,7 +64,7 @@ Under POSIX systems, to build and install wxMathPlot run:
 
 mkdir build && cd build
 cmake ../ -DCMAKE_INSTALL_PREFIX=/usr/local/
-make
+cmake --build .
 make install
 
 Running cmake with -i option causes to get an interactive shell which asks some question on how to build the library.

@@ -7,12 +7,12 @@
 
 Name: wxMathPlot
 Version:
-Release: 2
+Release: 2%{?dist}
 Vendor: wxMathPlot team
 License: wxWindows
 Summary: 2D plot library for wxWidgets
 Group: Applications/Development
-Packager: Davide Rondini
+Packager: Davide Rondini, Lars Easior
 Source: %{name}-%{version}.tar.gz
 # Managing wxWidgets dependecy is quite complicated
 # Both Fedora and SuSE (up to 11.3) use the package wxGTK as main package for wxWidgets, but SuSE includes
@@ -79,10 +79,13 @@ This is development package: header files and sample code.
 %defattr(-, root, root)
 %doc README
 %doc Changelog
-%{_includedir}/mathplot.h
-%{_datadir}/wxMathPlot/samples/*
-%{_datadir}/wxMathPlot/Doxyfile
+%{_includedir}/wx/mathplot.h
+%{_datadir}/%{name}/samples/*
+%{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Apr 15 2022 EASIOR lars <easior@fedoraproject.org> - 35-1
+- version 0.2.0 alpa released
 
-
+* 2008 Davide Rondini 
+- Initial build.
