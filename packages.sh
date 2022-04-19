@@ -2,7 +2,7 @@
 
 NATIVE=FALSE
 DEBUG=FALSE
-PKGNAME=wxMathPlot
+PKGNAME=wxmathplot
 
 function create_source_tgz {
     VERSION=`cat ./distrib/VERSION`
@@ -21,7 +21,7 @@ function create_source_tgz {
             cp $SRC ./distrib/$PKGDIR/`dirname $SRC`/
         done
         # Copy other useful files
-        for SRC2 in {clear_project,README,Doxyfile,Dox_footer.html,Changelog,packages.sh,wxMathPlot.pc.in,samples/sample3/gridmap.png,lib/README,distrib/Base.spec,distrib/VERSION,debian/README.Debian,debian/compat,debian/copyright,debian/docs,debian/wxmathplot-dev.dirs,debian/wxmathplot1.dirs,debian/changelog,debian/control,debian/dirs,debian/rules,debian/wxmathplot-dev.install,debian/wxmathplot1.install} ; do
+        for SRC2 in {clear_project,README,Doxyfile,Dox_footer.html,Changelog,packages.sh,wxmathplot.pc.in,samples/sample3/gridmap.png,lib/README,distrib/Base.spec,distrib/VERSION,debian/README.Debian,debian/compat,debian/copyright,debian/docs,debian/wxmathplot-dev.dirs,debian/wxmathplot1.dirs,debian/changelog,debian/control,debian/dirs,debian/rules,debian/wxmathplot-dev.install,debian/wxmathplot1.install} ; do
             cp $SRC2 ./distrib/$PKGDIR/`dirname $SRC2`/
         done
         # Finally create tar.gz of source package
@@ -67,23 +67,28 @@ function create_deb {
     fi
 
     TMPCL=distrib/deb_tmp_cl
-    unlink debian/control
+    #unlink debian/control
     DEBVERSION=`cat /etc/debian_version`
     case $DEBVERSION in
     	"4.0")
     		echo "using Debian Etch!"
     		OSVER="etch1"
-    		cd debian && ln -s control-debian control && cd ..
+    		# cd debian && ln -s control-debian control && cd ..
     	;;
     	"5.0")
     		echo "using Debian Lenny!"
     		OSVER="lenny1"
-    		cd debian && ln -s control-ubuntu control && cd ..
+    		# cd debian && ln -s control-ubuntu control && cd ..
     	;;
-    	"lenny/sid")
-    		echo "This is Ubuntu, not Debian!"
-    		OSVER="ubuntu1"
-    		cd debian && ln -s control-ubuntu control && cd ..
+    	"sid")
+    		echo "This is Debian sid!"
+    		OSVER="sid1"
+    		# cd debian && ln -s control-sid control && cd ..
+    	;;
+    	"kali-rolling")
+    		echo "This is Kali Linux, not Debian!"
+    		OSVER="kali1"
+    		# cd debian && ln -s control-kali control && cd ..
     	;;
     esac
     COMPLETE_VERSION=$VERSION-$OSVER
@@ -95,7 +100,7 @@ function create_deb {
     # LC_TIME="en_US.UTF-8"
     date -R >> $TMPCL
     echo >> $TMPCL
-    joe $TMPCL
+    #nano -w $TMPCL
     cat debian/changelog >> $TMPCL
     mv $TMPCL debian/changelog
     debuild -us -uc

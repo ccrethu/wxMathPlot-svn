@@ -9,7 +9,7 @@
 # Set CMake flags to enable compatibility both with 2.4 and 2.6
 cmake_minimum_required(VERSION 2.6...3.13)
 
-project(wxMathPlot
+project(wxmathplot
 LANGUAGES CXX
 HOMEPAGE_URL https://github.invalid/easior/wxMathPlot
 DESCRIPTION "wxMathPlot is a framework for mathematical graph plotting in wxWindows.")
